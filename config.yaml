@@ -1,11 +1,11 @@
 llm:
   # gpt-3.5-turbo or gpt-4
-  openai_endpoint:
-  model: "gpt-3.5-turbo"
   azure_openai_endpoint:
+  openai_endpoint: "http://llama_server:8000/v1"
+  model: "gpt-3.5-turbo"
   openai_org_id:
 nlp:
-  server_url: "http://localhost:8080"
+  server_url: "http://nlp:8080"
 memory:
   message_window: 12
 extractors:
@@ -17,10 +17,10 @@ extractors:
     enabled: true
   embeddings:
     enabled: true
-    dimensions: 1536
-    model: "AdaEmbeddingV2"
-#    dimensions: 768
-#    model: "local"
+    # dimensions: 1536
+    # model: "AdaEmbeddingV2"
+    dimensions: 768
+    model: "local"
 memory_store:
   type: "postgres"
   postgres:

@@ -13,7 +13,16 @@ services:
     networks:
       - zep-network
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "postgres",
+          "-U",
+          "postgres"
+        ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -23,7 +32,7 @@ services:
     image: ghcr.io/getzep/zep-nlp-server:latest
     container_name: zep-nlp
     environment:
-        - ENABLE_EMBEDDINGS=false
+      - ENABLE_EMBEDDINGS=true
     restart: on-failure
     networks:
       - zep-network
@@ -34,18 +43,18 @@ services:
       retries: 5
       start_period: 45s
     ports:
-      - "8080:8080"
+      - "8090:8080"
   zep:
-    image: ghcr.io/getzep/zep:latest
+    image: zep:latest
     container_name: zep
     restart: on-failure
     depends_on:
-        db:
-          condition: service_healthy
-        nlp:
-          condition: service_healthy
+      db:
+        condition: service_healthy
+      nlp:
+        condition: service_healthy
     ports:
-        - "8000:8000"
+      - "8000:8000"
     volumes:
       - ./config.yaml:/app/config.yaml
     environment:
@@ -67,4 +76,3 @@ services:
 networks:
   zep-network:
     driver: bridge
-
